@@ -38,7 +38,24 @@ function App() {
   // 모달 페이지가 보이게/안보이게 작업하기위한 스테이트
   const [modal, setModal] = useState(false);
 
+  //직전 선택한 인덱스를 저장할 스테이트
+  const [currentIndex, setCurrentIndex] =useState(null);
 
+  // 제목 클릭시 모달 보이기
+  function handleTitle(index){
+    // 조건 : 같은 제목을 클릭하면 나타나고 사라짐
+    // 다른 제목을 클릭하면 그냥 보여야 하고.. 
+    if(! modal){
+      //1. 현재 모달이 닫혀있으면 연다.
+      setModal(true);
+      setCurrentIndex(index);
+    } else if(currentIndex == index){
+      //2.같은 타이틀이 선택된 경우
+      setModal(false);
+    }else{
+      setCurrentIndex(index);
+    }
+  }
   return (
     <div className='App'>
       <div className='black-bg'>
@@ -52,38 +69,23 @@ function App() {
         setTitle(sortedTitle);
       }}>글 정렬하기</button>
 
-
       <div className='list'>
-        <div>
-        <h4 onClick={()=>{
-          setModal(! modal)
-        }}>{title[0]}
-          <span onClick={()=>{
-          const newLikes = [...like]
-          newLikes[0]++
-          setLike(newLikes)
-        }}>👍</span>{like[0]}
-        {/* 변경단추클릭하면 여자코트추천을 변경 */}
-        <button onClick={changeTitle}>변경</button>
-        </h4>
-        <p>작성일 : {date[0]}</p>
-        </div>
-        <div>
-        <h4>{title[1]}<span onClick={()=>{
-          const newLikes = [...like]
-          newLikes[1]++
-          setLike(newLikes)
-        }}>👍</span>{like[1]}</h4>
-        <p>작성일 : {date[1]}</p>
-        </div>
-        <div>
-        <h4>{title[2]}<span onClick={()=>{
-          const newLikes = [...like]
-          newLikes[2]++
-          setLike(newLikes)
-        }}>👍</span>{like[2]}</h4>
-        <p>작성일 : {date[2]}</p>
-        </div>
+        {title.map((item, index)=>{
+          return(
+            <div key={index}>
+              <h4 onClick={()=> handleTitle(index)}>
+                {title[index]}
+                <span onClick={() => {
+                  const newLikes = [...like]
+                  newLikes[index]++
+                  setLike(newLikes)
+                }}>👍</span>{like[index]}
+
+              </h4>
+              <p>작성일 : {date[index]}</p>
+            </div>
+          )
+        })}
       </div>
 
       {/* 상세페이지 나타날 곳 */}
