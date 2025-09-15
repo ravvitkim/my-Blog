@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import './App.css'
 import Modal from './Modal';
+import Title from './Title';
+import Blog from './Blog';
+
 
 function App() {
 
@@ -64,35 +67,12 @@ function App() {
   }
   return (
     <div className='App'>
-      <div className='black-bg'>
-        React + Vite로 만드는 블로그
-      </div>
-      {/* <h4 style={{color: 'red', fontSize: '20px'}}>{post}</h4> */}
-
+      <Title />
       {/* 타이틀 정렬하기 */}
-      <button onClick={()=>{
-        const sortedTitle = [...title].sort()
-        setTitle(sortedTitle);
-      }}>글 정렬하기</button>
-
-      <div className='list'>
-        {title.map((item, index)=>{
-          return(
-            <div key={index}>
-              <h4 onClick={()=> handleTitle(index)}>
-                {title[index]}
-                <span onClick={() => {
-                  const newLikes = [...like]
-                  newLikes[index]++
-                  setLike(newLikes)
-                }}>👍</span>{like[index]}
-
-              </h4>
-              <p>작성일 : {date[index]}</p>
-            </div>
-          )
-        })}
-      </div>
+      <Blog
+      title={title} date={date} details={details} like={like} currentIndex={currentIndex} handleTitle={handleTitle}
+      setTitle={setTitle} setLike={setLike}
+      />
 
       {/* 상세페이지 나타날 곳 */}
       {modal ? <Modal color="lightblue" 
