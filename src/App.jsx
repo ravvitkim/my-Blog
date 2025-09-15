@@ -55,7 +55,10 @@ function App() {
 
       <div className='list'>
         <div>
-        <h4>{title[0]}<span onClick={()=>{
+        <h4 onClick={()=>{
+          setModal(! modal)
+        }}>{title[0]}
+          <span onClick={()=>{
           const newLikes = [...like]
           newLikes[0]++
           setLike(newLikes)
@@ -82,7 +85,7 @@ function App() {
         <p>작성일 : {date[2]}</p>
         </div>
       </div>
-      
+
       {/* 상세페이지 나타날 곳 */}
       {modal ? <Modal />: null }
     </div>
